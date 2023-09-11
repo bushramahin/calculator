@@ -1,0 +1,2 @@
+# calculator
+  Simple CLI Calculator
