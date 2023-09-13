@@ -1,45 +1,99 @@
+#! /usr/bin/env node
 import inquirer from "inquirer";
 import chalk from "chalk";
 import Banner from "node-banner";
-import {sum} from "./functions.js";
+import {subtract, sum ,  product , divison,square,logarithm} from "./functions.js";
+import gradient from 'gradient-string';
+let operations= [ 
+    {
+        name : "operation",
+        type : "list",
+        choices : ["addition" , "subtraction" , "multiplication" , "division","square root","logarithm"],
+        message : gradient.rainbow("Enter your operation:"),
+    },
+]
+let op = [
+    {
+        name : "num",
+        type: "number",
+        messsage : gradient.rainbow("Enter number"),
+        validate(num : number){
+            if(isNaN(num)){
+                return "Please enter number"
+            }
+            return true
+        }
+    }
+]
 let answers = [
     {
         name : "num1",
         type : "number",
-        message : "Enter First Number"
+        message : gradient.rainbow("Enter First Number"),
+        validate : (inp : number) => {
+            if(isNaN(inp)){
+                return "Please Enter number"
+            }
+            return true
+        }
     },
     {
         name : "num2",
         type : "number",
-        message : "Enter Second number"
+        message : gradient.rainbow("Enter Second number"),
+        validate : (inp : number) => {
+            if(isNaN(inp)){
+                return "Please Enter number"
+            }
+            return true
+        }
     },
+];
+
+(async ()=>{
+    await Banner('Calculator' , 'This calculator can perform addition, Subtraction , multiplication and division ','red' ,'blue')
+})();
+let answer = [
     {
-        name : "operation",
-        type : "list",
-        choices : ["addition" , "subtraction" , "multiplication" , "division"]
+        name : "again",
+        type : "confirm",
+        message : "Do you want to continue your calculation:"
     }
 ]
-let {num1 , num2 , operation} = await inquirer.prompt(answers);
-
 async function calculator(){
-    (async ()=>{
-        await Banner('Calculator' , 'This calculator can perform addition, Subtraction , multiplication and division ','red' ,'blue')
-    })();
-    if(operation == "addition"){
-        console.log("addition" , sum(num1 , num2));
-    }
-    else if (operation == "subtraction"){
-        let sub = num1 - num2;
-        console.log("subtraction" , chalk.bgCyan(sub));
-    }
-    else if(operation == "multiplication"){
-        let product = num1*num2;
-        console.log("multiplication" , chalk.bgGreen(product));
-    }
-    else{
-        let div = num1/num2;
-        console.log("division" , chalk.bgCyan(div));
+    let condition = true;
+    while (condition) {
+        let {operation} = await inquirer.prompt(operations)
+        if(operation == "square root" || operation == "logarithm"){
+            let {num} = await inquirer.prompt(op);
+            if(operation == "square root"){
+                console.log("Square root of given number is" , square(num));
+                
+            }
+            else{
+                console.log("Logarithm of given number with base e is" , logarithm(num));
+            }
+        }
+        else{
+            let {num1 , num2} = await inquirer.prompt(answers);
+            if(operation == "addition"){
+                console.log("addition" , sum(num1 , num2));
+            }
+            else if (operation == "subtraction"){
+                console.log("subtraction" , subtract(num1 , num2));
+            }
+            else if(operation == "multiplication"){
+                console.log("multiplication" , product(num1 , num2));
+            }
+            else if(operation == "divison"){
+                console.log("division" , divison(num1 , num2));
+                
+            }
+        }
         
+       
+        let {again} = await inquirer.prompt(answer)
+        condition = again
     }
 }
 setTimeout(function(){
