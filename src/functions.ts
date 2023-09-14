@@ -16,3 +16,6 @@ export function square (a:number){
 export function logarithm(a:number){
     return Math.log(a)
 }
+export function exponent(a:number , b:number){
+    return b**a
+}

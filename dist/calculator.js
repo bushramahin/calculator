@@ -1,15 +1,39 @@
 #! /usr/bin/env node
 import inquirer from "inquirer";
 import Banner from "node-banner";
-import { subtract, sum, product, divison, square, logarithm } from "./functions.js";
+import { subtract, sum, product, divison, square, logarithm, exponent } from "./functions.js";
 import gradient from 'gradient-string';
 let operations = [
     {
         name: "operation",
         type: "list",
-        choices: ["addition", "subtraction", "multiplication", "division", "square root", "logarithm"],
+        choices: ["addition", "subtraction", "multiplication", "division", "square root", "logarithm", "Power"],
         message: gradient.rainbow("Enter your operation:"),
     },
+];
+let expo = [
+    {
+        name: "Base",
+        type: "number",
+        message: gradient.rainbow("Enter base"),
+        validate(base) {
+            if (isNaN(base)) {
+                return "please Enter number";
+            }
+            return true;
+        }
+    },
+    {
+        name: "Power",
+        type: "number",
+        message: gradient.rainbow("Enter Power"),
+        validate(power) {
+            if (isNaN(power)) {
+                return "please Enter number";
+            }
+            return true;
+        }
+    }
 ];
 let op = [
     {
@@ -70,6 +94,10 @@ async function calculator() {
             else {
                 console.log("Logarithm of given number with base e is", logarithm(num));
             }
+        }
+        else if (operation == "Power") {
+            let { Power, Base } = await inquirer.prompt(expo);
+            console.log(exponent(Power, Base));
         }
         else {
             let { num1, num2 } = await inquirer.prompt(answers);
