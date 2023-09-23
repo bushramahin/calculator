@@ -1,11 +1,11 @@
 {
-  "name": "bushra_mahin_calculator",
+  "name": "bm_calculator",
   "version": "1.0.0",
   "description": "",
-  "main": "calculator.js",
+  "main": "index.js",
   "type": "module",
   "bin": {
-    "calculator": "calculator.js"
+    "bm_calculator": "dist/calculator.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
