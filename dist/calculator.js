@@ -110,7 +110,7 @@ async function calculator() {
             else if (operation == "multiplication") {
                 console.log("multiplication", product(num1, num2));
             }
-            else if (operation == "divison") {
+            else if (operation == "division") {
                 console.log("division", divison(num1, num2));
             }
         }
